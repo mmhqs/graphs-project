@@ -1,2 +1,36 @@
 # graphs-project
 Graph repo with implementation of its own graph library to solve a modeled problem.
+
+## Features
+
+### Graph Representations
+
+- **Adjacency Matrix**  
+  A 2D matrix where cell `[i][j]` represents the presence (and optionally the weight) of an edge between vertices `i` and `j`.
+
+- **Adjacency List**  
+  A dictionary-based structure where each vertex maps to a list of adjacent vertices (and optionally the weights or labels of edges).
+
+### Core Functionality
+
+The library supports a range of basic and advanced graph operations:
+
+- **Graph Creation**
+  - Create a graph with a user-defined number of vertices
+
+- **Edge Manipulation**
+  - Add and remove edges
+
+- **Vertex and Edge Labeling**
+  - Assign weights and labels to vertices
+  - Assign weights and labels to edges
+
+- **Adjacency Checks**
+  - Check adjacency between two vertices
+  - Check adjacency between two edges
+
+- **Incidence Checks**
+  - Verify if an edge is incident to a vertex
+
+- **Ex**
+
