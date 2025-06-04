@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "graphs-project"
+version = "0.1.0"
+description = "Graph repo with implementation of its own graph library to solve a modeled problem."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    {name = "Roberta Sophia", email = "robertasophiacsilva@gmail.com"},
+    {name = "Seu Nome", email = "seu.email@exemplo.com"}
+]
+
+dependencies = [
+]
+
+[dependency-groups]
+dev = [
+]
+
+[tool.ruff]
+line-length = 100
+select = [
+    "F",   # pyflakes
+    "E",   # pycodestyle
+    "I",   # isort
+    "ANN", # type annotations
+    "RUF"  # ruff-specific
+]
+fixable = ["ALL"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+disallow_untyped_defs = true
+
+[project.scripts]
+graphs-project = "graphs_project.core:soma_lista"

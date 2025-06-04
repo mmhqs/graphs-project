@@ -1,0 +1,2 @@
+[console_scripts]
+graphs-project = graphs_project.core:soma_lista

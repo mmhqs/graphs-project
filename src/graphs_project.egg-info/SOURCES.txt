@@ -1,0 +1,9 @@
+README.md
+pyproject.toml
+src/graphs_project/__init__.py
+src/graphs_project/core.py
+src/graphs_project.egg-info/PKG-INFO
+src/graphs_project.egg-info/SOURCES.txt
+src/graphs_project.egg-info/dependency_links.txt
+src/graphs_project.egg-info/entry_points.txt
+src/graphs_project.egg-info/top_level.txt
