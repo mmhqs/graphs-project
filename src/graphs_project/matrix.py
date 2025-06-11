@@ -7,6 +7,7 @@ class MatrixGraph(Graph):
     def __init__(self, directed=False):
         super().__init__(directed)
         self.vertices: list[Vertex] = []
+        self.vertices: list[Vertex] = []
         self.matrix = []
 
     # 2. Criação de um grafo com X vértices (o número de vértices deve ser inserido pelo usuário)
@@ -58,6 +59,12 @@ class MatrixGraph(Graph):
             self.matrix[idx2][idx1] = weight
 
     # Remoção de aresta
+    def remove_edge(self, vertex1, vertex2):
+        if vertex1 in self.vertices and vertex2 in self.vertices:
+            idx1 = self.vertices.index(vertex1)
+            idx2 = self.vertices.index(vertex2)
+    # Remoção de aresta
+
     def remove_edge(self, vertex1, vertex2):
         if vertex1 in self.vertices and vertex2 in self.vertices:
             idx1 = self.vertices.index(vertex1)
