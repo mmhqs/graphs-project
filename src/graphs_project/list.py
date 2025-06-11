@@ -2,30 +2,30 @@ from graph import Graph
 
 
 class ListGraph(Graph):
-    # Representação de grafos utilizando Lista de Adjacência (classe e atributos)
+    # 1. Representação de grafos utilizando Lista de Adjacência (classe e atributos)
     def __init__(self, directed=False):
         super().__init__(directed)
         self.vertices = []
         self.matrix = []
 
-    # Criação de um grafo com X vértices (o número de vértices deve ser inserido pelo usuário)
+    # 2. Criação de um grafo com X vértices (o número de vértices deve ser inserido pelo usuário)
 
-    # Criação de aresta
+    # 3. Criação de aresta
 
-    # Remoção de aresta
+    # 4. Remoção de aresta
 
-    # Ponderação e rotulação de vértices
+    # 5. Ponderação e rotulação de vértices
 
-    # Ponderação e rotulação de arestas
+    # 6. Ponderação e rotulação de arestas
 
-    # Checagem de adjacência entre vértices
+    # 7. Checagem de adjacência entre vértices
 
-    # Checagem de adjacência entre arestas
+    # 8. Checagem de adjacência entre arestas
 
-    # Checagem de incidência entre aresta e vértice
+    # 9. Checagem de incidência entre aresta e vértice
 
-    # Checagem da existência de arestas
+    # 10. Checagem da existência de arestas
 
-    # Checagem da quantidade de vértices e arestas
+    # 11. Checagem da quantidade de vértices e arestas
 
-    # Checagem de grafo vazio e completo
+    # 12. Checagem de grafo vazio e completo
