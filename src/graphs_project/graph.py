@@ -2,21 +2,16 @@ from abc import ABC, abstractmethod
 
 
 class Graph(ABC):
+    # Atributos do grafo
     def __init__(self, directed=False):
         self.directed = directed
 
+    # Criação de aresta
     @abstractmethod
-    def add_vertex(self, vertex):
+    def add_edge(self, vertex1, vertex2, weight=1):
         pass
 
+    # Remoção de aresta
     @abstractmethod
-    def add_edge(self, v1, v2, weight=1):
-        pass
-
-    @abstractmethod
-    def remove_vertex(self, vertex):
-        pass
-
-    @abstractmethod
-    def remove_edge(self, v1, v2):
+    def remove_edge(self, vertex1, vertex2):
         pass
