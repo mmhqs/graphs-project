@@ -32,3 +32,7 @@ The library supports a range of basic and advanced graph operations:
 - **Incidence Checks**
   - Verify if an edge is incident to a vertex
 
+
+  ### How to run the lib
+  `C:\github\graphs-project\src> python -m graphs_project.main`
+
