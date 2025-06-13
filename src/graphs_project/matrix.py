@@ -75,6 +75,7 @@ class MatrixGraph(Graph):
 
             new_edge = Edge(source_vertex, target_vertex,
                             weight, label if label else None)
+            
             self.edges.append(new_edge)
 
             print(

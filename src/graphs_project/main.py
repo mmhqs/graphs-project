@@ -1,7 +1,6 @@
 
 from graphs_project.matrix import MatrixGraph
-from graphs_project.vertex import Vertex
-
+from graphs_project.list import ListGraph
 
 def create_graph():
     print("Olá, pessoa! Bem-vindo(a) à nossa biblioteca de grafos.\n")
@@ -33,9 +32,7 @@ def create_graph():
             graph = MatrixGraph(directed)
             break
         elif escolha == "2":
-            print(
-                "ListGraph ainda não implementado. Usando MatrixGraph como fallback.")
-            graph = MatrixGraph(directed)
+            graph = ListGraph(directed)
             break
         else:
             print("Opção inválida. Tente novamente.\n")
