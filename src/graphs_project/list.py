@@ -76,6 +76,7 @@ class ListGraph(Graph):
             print("Peso inválido. A aresta não foi criada.")
 
     # 4. Remoção de aresta
+    # 4.1 Método auxiliar
     def remove_edge_aux(self, edge_to_remove, opcao):
         source_id = edge_to_remove.sourceVertex.id
         target_id = edge_to_remove.targetVertex.id
@@ -99,6 +100,7 @@ class ListGraph(Graph):
         else:
             print(f"Aresta entre '{source_id}' e '{target_id}' removida com sucesso.")
 
+    # 4.2 Opções para remoção das arestas
     def remove_edge(self):
         print("Escolha o método de remoção:")
         print("1 - Remover por label")
@@ -146,18 +148,186 @@ class ListGraph(Graph):
 
         
     # 5. Ponderação e rotulação de vértices
+    # 5.1. Ponderação
     def set_vertex_weight(self):
-        return;
+        vertex_id = input("ID do vértice: ").strip()
+        peso_input = input("Peso a atribuir: ").strip()
+        try:
+            weight = int(peso_input)
+        except ValueError:
+            print("Peso inválido.")
+            return
+
+        for vertex in self.vertices:
+            if vertex.id == vertex_id:
+                vertex.weight = weight
+                print(f"Peso {weight} atribuído ao vértice '{vertex_id}'.")
+
+                print("Lista de vértices com seus pesos:")
+                for v in self.vertices:
+                    print(f"Vértice {v.id}: peso = {v.weight}")
+                return
+        print(f"Vértice '{vertex_id}' não encontrado.")
     
+    # 5.2. Rotulação
     def set_vertex_label(self):
-        return;
+        vertex_id = input("ID do vértice: ").strip()
+        label_input = input("Rótulo a atribuir: ").strip()
+
+        for vertex in self.vertices:
+            if vertex.id == vertex_id:
+                vertex.label = label_input
+                print(
+                    f"\nRótulo {label_input} atribuído ao vértice '{vertex_id}'.")
+
+                print("Lista de vértices com seus rótulos:")
+                for v in self.vertices:
+                    print(f"Vértice {v.id}: rótulo = {v.label}")
+                return
+        print(f"Vértice '{vertex_id}' não encontrado.")
 
     # 6. Ponderação e rotulação de arestas
+    # 6.1 Ponderação
     def set_edge_weight(self):
-        return;
+        print("Escolha o método para identificar a aresta:")
+        print("1 - Por label")
+        print("2 - Por vértices de origem e destino")
+        
+        try:
+            opcao = int(input("Digite sua opção (1 ou 2): ").strip())
+        except ValueError:
+            print("Opção inválida. Operação cancelada.")
+            return
 
+        weight_input = input("Novo peso da aresta: ").strip()
+        try:
+            weight = float(weight_input)
+        except ValueError:
+            print("Peso inválido. Operação cancelada.")
+            return
+
+        edge_to_update = None
+
+        if opcao == 1:
+            label = input("Label da aresta a ser atualizada: ").strip()
+            for edge in self.edges:
+                if edge.label == label:
+                    edge_to_update = edge
+                    break
+            
+            if not edge_to_update:
+                print(f"Aresta com label '{label}' não encontrada.")
+                return
+
+        elif opcao == 2:
+            vertex1_id = input("ID do vértice de origem: ").strip()
+            vertex2_id = input("ID do vértice de destino: ").strip()
+            
+            for edge in self.edges:
+                if (edge.sourceVertex.id == vertex1_id and 
+                    edge.targetVertex.id == vertex2_id):
+                    edge_to_update = edge
+                    break
+            
+            if not edge_to_update:
+                print(f"Aresta entre '{vertex1_id}' e '{vertex2_id}' não encontrada.")
+                return
+
+        else:
+            print("Opção inválida. Operação cancelada.")
+            return
+
+        # Atualiza o peso na lista de adjacência
+        source_id = edge_to_update.sourceVertex.id
+        target_id = edge_to_update.targetVertex.id
+
+        for neighbor in self.adjacency_list[source_id]:
+            if neighbor['vertex_id'] == target_id:
+                neighbor['weight'] = weight
+                break
+
+        if not self.directed:
+            for neighbor in self.adjacency_list[target_id]:
+                if neighbor['vertex_id'] == source_id:
+                    neighbor['weight'] = weight
+                    break
+
+        # Atualiza o peso no objeto Edge
+        edge_to_update.weight = weight
+
+        if opcao == 1:
+            print(f"\nPeso da aresta '{edge_to_update.label}' atualizado para {weight}.\n")
+        else:
+            print(f"\nPeso da aresta entre '{source_id}' e '{target_id}' atualizado para {weight}.\n")
+
+        print("Lista atualizada de arestas com seus pesos:")
+        for e in self.edges:
+            print(
+                f"Label: {e.label if e.label else 'sem rótulo'} | "
+                f"{e.sourceVertex.id} -> {e.targetVertex.id} | "
+                f"Peso: {e.weight}"
+            )
+
+    # 6.2. Rotulação
     def set_edge_label(self):
-        return;
+        print("Escolha o método para identificar a aresta:")
+        print("1 - Por label atual")
+        print("2 - Por vértices de origem e destino")
+        
+        try:
+            opcao = int(input("Digite sua opção (1 ou 2): ").strip())
+        except ValueError:
+            print("Opção inválida. Operação cancelada.")
+            return
+
+        novo_label = input("Novo label para a aresta: ").strip()
+        edge_to_update = None
+
+        if opcao == 1:
+            label_atual = input("Label atual da aresta que deseja renomear: ").strip()
+            
+            for edge in self.edges:
+                if edge.label == label_atual:
+                    edge_to_update = edge
+                    break
+            
+            if not edge_to_update:
+                print(f"Nenhuma aresta encontrada com o label '{label_atual}'.")
+                return
+
+        elif opcao == 2:
+            vertex1_id = input("ID do vértice de origem: ").strip()
+            vertex2_id = input("ID do vértice de destino: ").strip()
+            
+            for edge in self.edges:
+                if (edge.sourceVertex.id == vertex1_id and 
+                    edge.targetVertex.id == vertex2_id):
+                    edge_to_update = edge
+                    break
+            
+            if not edge_to_update:
+                print(f"Aresta entre '{vertex1_id}' e '{vertex2_id}' não encontrada.")
+                return
+
+        else:
+            print("Opção inválida. Operação cancelada.")
+            return
+
+        old_label = edge_to_update.label
+        edge_to_update.label = novo_label
+        
+        if opcao == 1:
+            print(f"\nLabel da aresta atualizada de '{old_label}' para '{novo_label}'.\n")
+        else:
+            print(f"\nLabel da aresta entre '{edge_to_update.sourceVertex.id}' e '{edge_to_update.targetVertex.id}' atualizado para '{novo_label}'.\n")
+
+        print("Lista atualizada de arestas com seus rótulos:")
+        for e in self.edges:
+            print(
+                f"Aresta {e.id}: "
+                f"{e.sourceVertex.id} -> {e.targetVertex.id} | "
+                f"Peso: {e.weight} | Rótulo: {e.label if e.label else 'sem rótulo'}"
+            )
 
     # 7. Checagem de adjacência entre vértices
     # 8. Checagem de adjacência entre arestas
@@ -180,3 +350,5 @@ class ListGraph(Graph):
                 print(f"{vertex_id}: [{neighbors_str}]")
             else:
                 print(f"{vertex_id}: []")
+        # print(self.edges)
+        # print(self.vertices)
