@@ -239,18 +239,47 @@ class MatrixGraph(Graph):
                 f"Peso: {e.weight} | Rótulo: {e.label if e.label else 'sem rótulo'}"
             )
 
-    # 7. Checagem de adjacência entre vértices
+        # 7. Checagem de adjacência entre vértices
+    def check_vertex_adjacency(self):
+        """
+        Verifica se dois vértices são adjacentes
+        """
+        pass
 
     # 8. Checagem de adjacência entre arestas
+    def check_edge_adjacency(self):
+        """
+        Verifica se duas arestas são adjacentes (compartilham um vértice comum)
+        """
+        pass
 
     # 9. Checagem de incidência entre aresta e vértice
+    def check_incidence(self):
+        """
+        Verifica se uma aresta incide em um determinado vértice
+        """
+        pass
 
     # 10. Checagem da existência de arestas
+    def has_edges(self):
+        """
+        Verifica se o grafo possui pelo menos uma aresta
+        """
+        pass
 
     # 11. Checagem da quantidade de vértices e arestas
+    def get_graph_size(self):
+        """
+        Retorna a quantidade de vértices e arestas do grafo
+        """
+        pass
 
     # 12. Checagem de grafo vazio e completo
-
+    def check_graph_type(self):
+        """
+        Verifica se o grafo é vazio (sem arestas) ou completo
+        """
+        pass
     # 13. Métodos extras
 
     def display(self):
