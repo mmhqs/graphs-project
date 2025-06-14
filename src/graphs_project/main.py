@@ -57,6 +57,7 @@ def menu(graph):
         print("12 - ❓ Verificar existência de arestas")
         print("13 - 📊 Ver quantidade de vértices e arestas")
         print("14 - 🔍 Verificar se grafo é vazio ou completo")
+        print("15 - 💾 Exportar grafo para GEXF (Gephi)")
         print("0 - 🚪 Sair")
         opcao = input("Escolha uma opção: ")
 
@@ -88,6 +89,9 @@ def menu(graph):
             graph.get_graph_size()
         elif opcao == "14":
             graph.check_graph_type()
+        elif opcao == "15":
+            filename = input("Nome do arquivo para exportação (ex: grafoPrefeitura): ").strip()
+            graph.export_to_gexf(filename)
         elif opcao == "0":
             print("Saindo. Obrigado por usar a biblioteca de grafos!")
             break
