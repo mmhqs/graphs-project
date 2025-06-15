@@ -11,6 +11,7 @@ requires-python = ">=3.6"
 authors = [
     { name = "Eduardo Henrique", email = "eduardo.henriquems@gmail.com" },
     { name = "Roberta Sophia", email = "roberta.silva@sga.pucminas.br" },
+    { name = "João Guilherme Falante", email = "jgfalantearaujo@gmail.com" },
 ]
 
 [project.scripts]
