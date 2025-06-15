@@ -75,7 +75,7 @@ class MatrixGraph(Graph):
 
             new_edge = Edge(source_vertex, target_vertex,
                             weight, label if label else None)
-
+            
             self.edges.append(new_edge)
 
             print(
@@ -243,27 +243,25 @@ class MatrixGraph(Graph):
     def check_vertex_adjacency(self):
         vertex1_id = input("ID do primeiro vértice: ").strip()
         vertex2_id = input("ID do segundo vértice: ").strip()
-
+        
         ids = [v.id for v in self.vertices]
-
+        
         if vertex1_id not in ids or vertex2_id not in ids:
             print("Um ou ambos os vértices não existem no grafo.")
             return
-
+        
         idx1 = ids.index(vertex1_id)
         idx2 = ids.index(vertex2_id)
-
+        
         # Verifica adjacência na matriz
         adjacent = self.matrix[idx1][idx2] != 0
-
+        
         if self.directed:
-            print(
-                f"'{vertex1_id}' {'é' if adjacent else 'não é'} adjacente a '{vertex2_id}'")
+            print(f"'{vertex1_id}' {'é' if adjacent else 'não é'} adjacente a '{vertex2_id}'")
         else:
             # Para grafos não direcionados, a adjacência é mútua
             adjacent_mutual = adjacent or self.matrix[idx2][idx1] != 0
-            print(
-                f"'{vertex1_id}' e '{vertex2_id}' {'são' if adjacent_mutual else 'não são'} adjacentes")
+            print(f"'{vertex1_id}' e '{vertex2_id}' {'são' if adjacent_mutual else 'não são'} adjacentes")
 
     # 8. Checagem de adjacência entre arestas
     def check_edge_adjacency(self):
@@ -271,18 +269,18 @@ class MatrixGraph(Graph):
         edge1 = self._select_edge()
         if not edge1:
             return
-
+        
         print("\nIdentifique a segunda aresta:")
         edge2 = self._select_edge()
         if not edge2:
             return
-
+        
         # Duas arestas são adjacentes se compartilham um vértice comum
         adjacent = (edge1.sourceVertex == edge2.sourceVertex or
                     edge1.sourceVertex == edge2.targetVertex or
                     edge1.targetVertex == edge2.sourceVertex or
                     edge1.targetVertex == edge2.targetVertex)
-
+        
         print(f"As arestas {'são' if adjacent else 'não são'} adjacentes")
 
     # Método auxiliar para selecionar aresta
@@ -290,7 +288,7 @@ class MatrixGraph(Graph):
         print("Escolha como identificar a aresta:")
         print("1 - Por label")
         print("2 - Por vértices de origem e destino")
-
+        
         try:
             opcao = int(input("Digite sua opção (1 ou 2): ").strip())
         except ValueError:
@@ -304,17 +302,17 @@ class MatrixGraph(Graph):
                     return edge
             print("Aresta não encontrada.")
             return None
-
+            
         elif opcao == 2:
             vertex1_id = input("ID do vértice de origem: ").strip()
             vertex2_id = input("ID do vértice de destino: ").strip()
             for edge in self.edges:
-                if (edge.sourceVertex.id == vertex1_id and
-                        edge.targetVertex.id == vertex2_id):
+                if (edge.sourceVertex.id == vertex1_id and 
+                    edge.targetVertex.id == vertex2_id):
                     return edge
             print("Aresta não encontrada.")
             return None
-
+            
         else:
             print("Opção inválida.")
             return None
@@ -326,13 +324,12 @@ class MatrixGraph(Graph):
         edge = self._select_edge()
         if not edge:
             return
-
+        
         # Verifica se o vértice é um dos extremos da aresta
-        incident = (edge.sourceVertex.id == vertex_id or
-                    edge.targetVertex.id == vertex_id)
-
-        print(
-            f"A aresta {'incide' if incident else 'não incide'} no vértice {vertex_id}")
+        incident = (edge.sourceVertex.id == vertex_id or 
+                   edge.targetVertex.id == vertex_id)
+        
+        print(f"A aresta {'incide' if incident else 'não incide'} no vértice {vertex_id}")
 
     # 10. Checagem da existência de arestas
     def has_edges(self):
@@ -353,13 +350,13 @@ class MatrixGraph(Graph):
         if not self.edges:
             print("O grafo é vazio (não possui arestas).")
             return
-
+        
         # Verifica se é completo
         num_vertices = len(self.vertices)
         max_edges = num_vertices * (num_vertices - 1)
         if not self.directed:
             max_edges = max_edges // 2
-
+        
         if len(self.edges) == max_edges:
             print("O grafo é completo.")
         else:
@@ -376,7 +373,7 @@ class MatrixGraph(Graph):
     def lib_add_vertex(self, vertex_id: str) -> None:
         """
         Adiciona um vértice ao grafo usando o ID fornecido.
-
+        
         Args:
             vertex_id (str): ID do vértice a ser adicionado
         """
@@ -393,10 +390,10 @@ class MatrixGraph(Graph):
     def lib_add_vertices(self, count: int) -> list[Vertex]:
         """
         Adiciona múltiplos vértices ao grafo.
-
+        
         Args:
             count (int): Número de vértices a serem adicionados
-
+            
         Returns:
             list[Vertex]: Lista dos vértices adicionados
         """
@@ -414,13 +411,13 @@ class MatrixGraph(Graph):
     def lib_add_edge(self, source_id: str, target_id: str, weight: float = 1, label: str = None) -> Edge:
         """
         Adiciona uma aresta ao grafo.
-
+        
         Args:
             source_id (str): ID do vértice de origem
             target_id (str): ID do vértice de destino
             weight (float, optional): Peso da aresta. Defaults to 1.
             label (str, optional): Rótulo da aresta. Defaults to None.
-
+            
         Returns:
             Edge: A aresta criada
         """
@@ -443,21 +440,21 @@ class MatrixGraph(Graph):
 
         new_edge = Edge(source_vertex, target_vertex, weight, label)
         self.edges.append(new_edge)
-
+        
         return new_edge
 
     def lib_remove_edge(self, source_id: str = None, target_id: str = None, label: str = None) -> Edge:
         """
         Remove uma aresta do grafo.
-
+        
         Args:
             source_id (str, optional): ID do vértice de origem
             target_id (str, optional): ID do vértice de destino
             label (str, optional): Rótulo da aresta
-
+            
         Returns:
             Edge: A aresta removida
-
+        
         Raises:
             ValueError: Se a aresta não for encontrada
         """
@@ -470,8 +467,8 @@ class MatrixGraph(Graph):
                     break
         elif source_id is not None and target_id is not None:
             for edge in self.edges:
-                if (edge.sourceVertex.id == source_id and
-                        edge.targetVertex.id == target_id):
+                if (edge.sourceVertex.id == source_id and 
+                    edge.targetVertex.id == target_id):
                     edge_to_remove = edge
                     break
 
@@ -495,14 +492,14 @@ class MatrixGraph(Graph):
     def lib_set_vertex_weight(self, vertex_id: str, weight: float) -> Vertex:
         """
         Define o peso de um vértice.
-
+        
         Args:
             vertex_id (str): ID do vértice
             weight (float): Novo peso
-
+            
         Returns:
             Vertex: O vértice atualizado
-
+            
         Raises:
             ValueError: Se o vértice não for encontrado
         """
@@ -515,14 +512,14 @@ class MatrixGraph(Graph):
     def lib_set_vertex_label(self, vertex_id: str, label: str) -> Vertex:
         """
         Define o rótulo de um vértice.
-
+        
         Args:
             vertex_id (str): ID do vértice
             label (str): Novo rótulo
-
+            
         Returns:
             Vertex: O vértice atualizado
-
+            
         Raises:
             ValueError: Se o vértice não for encontrado
         """
@@ -535,16 +532,16 @@ class MatrixGraph(Graph):
     def lib_set_edge_weight(self, weight: float, source_id: str = None, target_id: str = None, label: str = None) -> Edge:
         """
         Define o peso de uma aresta.
-
+        
         Args:
             weight (float): Novo peso
             source_id (str, optional): ID do vértice de origem
             target_id (str, optional): ID do vértice de destino
             label (str, optional): Rótulo da aresta
-
+            
         Returns:
             Edge: A aresta atualizada
-
+            
         Raises:
             ValueError: Se a aresta não for encontrada
         """
@@ -557,8 +554,8 @@ class MatrixGraph(Graph):
                     break
         elif source_id is not None and target_id is not None:
             for edge in self.edges:
-                if (edge.sourceVertex.id == source_id and
-                        edge.targetVertex.id == target_id):
+                if (edge.sourceVertex.id == source_id and 
+                    edge.targetVertex.id == target_id):
                     edge_to_update = edge
                     break
 
@@ -582,16 +579,16 @@ class MatrixGraph(Graph):
     def lib_set_edge_label(self, new_label: str, source_id: str = None, target_id: str = None, old_label: str = None) -> Edge:
         """
         Define o rótulo de uma aresta.
-
+        
         Args:
             new_label (str): Novo rótulo
             source_id (str, optional): ID do vértice de origem
             target_id (str, optional): ID do vértice de destino
             old_label (str, optional): Rótulo atual da aresta
-
+            
         Returns:
             Edge: A aresta atualizada
-
+            
         Raises:
             ValueError: Se a aresta não for encontrada
         """
@@ -604,8 +601,8 @@ class MatrixGraph(Graph):
                     break
         elif source_id is not None and target_id is not None:
             for edge in self.edges:
-                if (edge.sourceVertex.id == source_id and
-                        edge.targetVertex.id == target_id):
+                if (edge.sourceVertex.id == source_id and 
+                    edge.targetVertex.id == target_id):
                     edge_to_update = edge
                     break
 

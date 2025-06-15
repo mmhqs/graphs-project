@@ -2,7 +2,6 @@
 from graphs_project.matrix import MatrixGraph
 from graphs_project.list import ListGraph
 
-
 def create_graph():
     print("Olá, pessoa! Bem-vindo(a) à nossa biblioteca de grafos.\n")
 
@@ -91,8 +90,7 @@ def menu(graph):
         elif opcao == "14":
             graph.check_graph_type()
         elif opcao == "15":
-            filename = input(
-                "Nome do arquivo para exportação (ex: grafoPrefeitura): ").strip()
+            filename = input("Nome do arquivo para exportação (ex: grafoPrefeitura): ").strip()
             graph.export_to_gexf(filename)
         elif opcao == "0":
             print("Saindo. Obrigado por usar a biblioteca de grafos!")

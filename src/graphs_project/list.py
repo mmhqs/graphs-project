@@ -19,8 +19,7 @@ class ListGraph(Graph):
             return
 
         self.vertices.append(vertex)
-        # Inicializa lista vazia de vizinhos
-        self.adjacency_list[vertex.id] = []
+        self.adjacency_list[vertex.id] = []  # Inicializa lista vazia de vizinhos
 
     # 2.2. Adicionando quantos vértices o usuário quiser
     def add_vertices(self):
@@ -35,8 +34,7 @@ class ListGraph(Graph):
                 vertex = Vertex(id=vertex_id)
                 self.add_vertex(vertex)
 
-            print(
-                f"Grafo criado com {count} vértices: {[v.id for v in self.vertices]}")
+            print(f"Grafo criado com {count} vértices: {[v.id for v in self.vertices]}")
 
         except ValueError:
             print("Entrada inválida. Por favor, digite um número inteiro.")
@@ -59,25 +57,20 @@ class ListGraph(Graph):
             # Adiciona à lista de adjacência
             neighbor_info = {'vertex_id': vertex2_id, 'weight': weight}
             self.adjacency_list[vertex1_id].append(neighbor_info)
-
+            
             if not self.directed:
-                neighbor_info_reverse = {
-                    'vertex_id': vertex1_id, 'weight': weight}
+                neighbor_info_reverse = {'vertex_id': vertex1_id, 'weight': weight}
                 self.adjacency_list[vertex2_id].append(neighbor_info_reverse)
 
             # Cria o objeto Edge
-            source_vertex = next(
-                v for v in self.vertices if v.id == vertex1_id)
-            target_vertex = next(
-                v for v in self.vertices if v.id == vertex2_id)
-            new_edge = Edge(source_vertex, target_vertex,
-                            weight, label if label else None)
+            source_vertex = next(v for v in self.vertices if v.id == vertex1_id)
+            target_vertex = next(v for v in self.vertices if v.id == vertex2_id)
+            new_edge = Edge(source_vertex, target_vertex, weight, label if label else None)
             print("new_edge")
             print(new_edge)
             self.edges.append(new_edge)
 
-            print(
-                f"Aresta adicionada: {vertex1_id} -> {vertex2_id} (peso {weight}, label: '{label if label else 'sem rótulo'}')")
+            print(f"Aresta adicionada: {vertex1_id} -> {vertex2_id} (peso {weight}, label: '{label if label else 'sem rótulo'}')")
 
         except ValueError:
             print("Peso inválido. A aresta não foi criada.")
@@ -90,31 +83,29 @@ class ListGraph(Graph):
 
         # Remove da lista de adjacência
         self.adjacency_list[source_id] = [
-            neighbor for neighbor in self.adjacency_list[source_id]
+            neighbor for neighbor in self.adjacency_list[source_id] 
             if neighbor['vertex_id'] != target_id
         ]
-
+        
         if not self.directed:
             self.adjacency_list[target_id] = [
-                neighbor for neighbor in self.adjacency_list[target_id]
+                neighbor for neighbor in self.adjacency_list[target_id] 
                 if neighbor['vertex_id'] != source_id
             ]
 
         self.edges.remove(edge_to_remove)
-
+        
         if opcao == 1:
-            print(
-                f"Aresta com label '{edge_to_remove.label if edge_to_remove.label else 'sem rótulo'}' removida com sucesso.")
+            print(f"Aresta com label '{edge_to_remove.label if edge_to_remove.label else 'sem rótulo'}' removida com sucesso.")
         else:
-            print(
-                f"Aresta entre '{source_id}' e '{target_id}' removida com sucesso.")
+            print(f"Aresta entre '{source_id}' e '{target_id}' removida com sucesso.")
 
     # 4.2 Opções para remoção das arestas
     def remove_edge(self):
         print("Escolha o método de remoção:")
         print("1 - Remover por label")
         print("2 - Remover por vértices de origem e destino")
-
+        
         try:
             opcao = int(input("Digite sua opção (1 ou 2): ").strip())
         except ValueError:
@@ -125,12 +116,12 @@ class ListGraph(Graph):
 
         if opcao == 1:
             label = input("Label da aresta a ser removida: ").strip()
-
+            
             for edge in self.edges:
                 if edge.label == label:
                     edge_to_remove = edge
                     break
-
+            
             if not edge_to_remove:
                 print(f"Aresta com label '{label}' não encontrada.")
                 return
@@ -138,27 +129,26 @@ class ListGraph(Graph):
         elif opcao == 2:
             vertex1_id = input("ID do vértice de origem: ").strip()
             vertex2_id = input("ID do vértice de destino: ").strip()
-
+            
             for edge in self.edges:
-                if (edge.sourceVertex.id == vertex1_id and
-                        edge.targetVertex.id == vertex2_id):
+                if (edge.sourceVertex.id == vertex1_id and 
+                    edge.targetVertex.id == vertex2_id):
                     edge_to_remove = edge
                     break
-
+            
             if not edge_to_remove:
-                print(
-                    f"Aresta entre '{vertex1_id}' e '{vertex2_id}' não encontrada.")
+                print(f"Aresta entre '{vertex1_id}' e '{vertex2_id}' não encontrada.")
                 return
 
         else:
             print("Opção inválida. Operação cancelada.")
             return
-
+        
         self.remove_edge_aux(edge_to_remove, opcao)
 
+        
     # 5. Ponderação e rotulação de vértices
     # 5.1. Ponderação
-
     def set_vertex_weight(self):
         vertex_id = input("ID do vértice: ").strip()
         peso_input = input("Peso a atribuir: ").strip()
@@ -178,7 +168,7 @@ class ListGraph(Graph):
                     print(f"Vértice {v.id}: peso = {v.weight}")
                 return
         print(f"Vértice '{vertex_id}' não encontrado.")
-
+    
     # 5.2. Rotulação
     def set_vertex_label(self):
         vertex_id = input("ID do vértice: ").strip()
@@ -202,7 +192,7 @@ class ListGraph(Graph):
         print("Escolha o método para identificar a aresta:")
         print("1 - Por label")
         print("2 - Por vértices de origem e destino")
-
+        
         try:
             opcao = int(input("Digite sua opção (1 ou 2): ").strip())
         except ValueError:
@@ -224,7 +214,7 @@ class ListGraph(Graph):
                 if edge.label == label:
                     edge_to_update = edge
                     break
-
+            
             if not edge_to_update:
                 print(f"Aresta com label '{label}' não encontrada.")
                 return
@@ -232,16 +222,15 @@ class ListGraph(Graph):
         elif opcao == 2:
             vertex1_id = input("ID do vértice de origem: ").strip()
             vertex2_id = input("ID do vértice de destino: ").strip()
-
+            
             for edge in self.edges:
-                if (edge.sourceVertex.id == vertex1_id and
-                        edge.targetVertex.id == vertex2_id):
+                if (edge.sourceVertex.id == vertex1_id and 
+                    edge.targetVertex.id == vertex2_id):
                     edge_to_update = edge
                     break
-
+            
             if not edge_to_update:
-                print(
-                    f"Aresta entre '{vertex1_id}' e '{vertex2_id}' não encontrada.")
+                print(f"Aresta entre '{vertex1_id}' e '{vertex2_id}' não encontrada.")
                 return
 
         else:
@@ -267,11 +256,9 @@ class ListGraph(Graph):
         edge_to_update.weight = weight
 
         if opcao == 1:
-            print(
-                f"\nPeso da aresta '{edge_to_update.label}' atualizado para {weight}.\n")
+            print(f"\nPeso da aresta '{edge_to_update.label}' atualizado para {weight}.\n")
         else:
-            print(
-                f"\nPeso da aresta entre '{source_id}' e '{target_id}' atualizado para {weight}.\n")
+            print(f"\nPeso da aresta entre '{source_id}' e '{target_id}' atualizado para {weight}.\n")
 
         print("Lista atualizada de arestas com seus pesos:")
         for e in self.edges:
@@ -286,7 +273,7 @@ class ListGraph(Graph):
         print("Escolha o método para identificar a aresta:")
         print("1 - Por label atual")
         print("2 - Por vértices de origem e destino")
-
+        
         try:
             opcao = int(input("Digite sua opção (1 ou 2): ").strip())
         except ValueError:
@@ -297,32 +284,29 @@ class ListGraph(Graph):
         edge_to_update = None
 
         if opcao == 1:
-            label_atual = input(
-                "Label atual da aresta que deseja renomear: ").strip()
-
+            label_atual = input("Label atual da aresta que deseja renomear: ").strip()
+            
             for edge in self.edges:
                 if edge.label == label_atual:
                     edge_to_update = edge
                     break
-
+            
             if not edge_to_update:
-                print(
-                    f"Nenhuma aresta encontrada com o label '{label_atual}'.")
+                print(f"Nenhuma aresta encontrada com o label '{label_atual}'.")
                 return
 
         elif opcao == 2:
             vertex1_id = input("ID do vértice de origem: ").strip()
             vertex2_id = input("ID do vértice de destino: ").strip()
-
+            
             for edge in self.edges:
-                if (edge.sourceVertex.id == vertex1_id and
-                        edge.targetVertex.id == vertex2_id):
+                if (edge.sourceVertex.id == vertex1_id and 
+                    edge.targetVertex.id == vertex2_id):
                     edge_to_update = edge
                     break
-
+            
             if not edge_to_update:
-                print(
-                    f"Aresta entre '{vertex1_id}' e '{vertex2_id}' não encontrada.")
+                print(f"Aresta entre '{vertex1_id}' e '{vertex2_id}' não encontrada.")
                 return
 
         else:
@@ -331,13 +315,11 @@ class ListGraph(Graph):
 
         old_label = edge_to_update.label
         edge_to_update.label = novo_label
-
+        
         if opcao == 1:
-            print(
-                f"\nLabel da aresta atualizada de '{old_label}' para '{novo_label}'.\n")
+            print(f"\nLabel da aresta atualizada de '{old_label}' para '{novo_label}'.\n")
         else:
-            print(
-                f"\nLabel da aresta entre '{edge_to_update.sourceVertex.id}' e '{edge_to_update.targetVertex.id}' atualizado para '{novo_label}'.\n")
+            print(f"\nLabel da aresta entre '{edge_to_update.sourceVertex.id}' e '{edge_to_update.targetVertex.id}' atualizado para '{novo_label}'.\n")
 
         print("Lista atualizada de arestas com seus rótulos:")
         for e in self.edges:
@@ -351,45 +333,43 @@ class ListGraph(Graph):
     def check_vertex_adjacency(self):
         vertex1_id = input("ID do primeiro vértice: ").strip()
         vertex2_id = input("ID do segundo vértice: ").strip()
-
+        
         if vertex1_id not in self.adjacency_list or vertex2_id not in self.adjacency_list:
             print("Um ou ambos os vértices não existem no grafo.")
             return
-
+        
         # Verifica se vertex2_id está na lista de adjacência de vertex1_id
-        adjacent = any(neighbor['vertex_id'] == vertex2_id
-                       for neighbor in self.adjacency_list[vertex1_id])
-
+        adjacent = any(neighbor['vertex_id'] == vertex2_id 
+                     for neighbor in self.adjacency_list[vertex1_id])
+        
         if self.directed:
-            print(
-                f"'{vertex1_id}' {'é' if adjacent else 'não é'} adjacente a '{vertex2_id}'")
+            print(f"'{vertex1_id}' {'é' if adjacent else 'não é'} adjacente a '{vertex2_id}'")
         else:
             # Para grafos não direcionados, a adjacência é mútua
-            adjacent_mutual = adjacent or any(neighbor['vertex_id'] == vertex1_id
-                                              for neighbor in self.adjacency_list[vertex2_id])
-            print(
-                f"'{vertex1_id}' e '{vertex2_id}' {'são' if adjacent_mutual else 'não são'} adjacentes")
+            adjacent_mutual = adjacent or any(neighbor['vertex_id'] == vertex1_id 
+                                           for neighbor in self.adjacency_list[vertex2_id])
+            print(f"'{vertex1_id}' e '{vertex2_id}' {'são' if adjacent_mutual else 'não são'} adjacentes")
 
-    # Parte Eduardo
+
+    ## Parte Eduardo 
     # 8. Checagem de adjacência entre arestas
-
     def check_edge_adjacency(self):
         print("Identifique a primeira aresta:")
         edge1 = self._select_edge()
         if not edge1:
             return
-
+        
         print("\nIdentifique a segunda aresta:")
         edge2 = self._select_edge()
         if not edge2:
             return
-
+        
         # Duas arestas são adjacentes se compartilham um vértice comum
         adjacent = (edge1.sourceVertex == edge2.sourceVertex or
                     edge1.sourceVertex == edge2.targetVertex or
                     edge1.targetVertex == edge2.sourceVertex or
                     edge1.targetVertex == edge2.targetVertex)
-
+        
         print(f"As arestas {'são' if adjacent else 'não são'} adjacentes")
 
     # Método auxiliar para selecionar aresta
@@ -397,7 +377,7 @@ class ListGraph(Graph):
         print("Escolha como identificar a aresta:")
         print("1 - Por label")
         print("2 - Por vértices de origem e destino")
-
+        
         try:
             opcao = int(input("Digite sua opção (1 ou 2): ").strip())
         except ValueError:
@@ -411,17 +391,17 @@ class ListGraph(Graph):
                     return edge
             print("Aresta não encontrada.")
             return None
-
+            
         elif opcao == 2:
             vertex1_id = input("ID do vértice de origem: ").strip()
             vertex2_id = input("ID do vértice de destino: ").strip()
             for edge in self.edges:
-                if (edge.sourceVertex.id == vertex1_id and
-                        edge.targetVertex.id == vertex2_id):
+                if (edge.sourceVertex.id == vertex1_id and 
+                    edge.targetVertex.id == vertex2_id):
                     return edge
             print("Aresta não encontrada.")
             return None
-
+            
         else:
             print("Opção inválida.")
             return None
@@ -433,13 +413,12 @@ class ListGraph(Graph):
         edge = self._select_edge()
         if not edge:
             return
-
+        
         # Verifica se o vértice é um dos extremos da aresta
-        incident = (edge.sourceVertex.id == vertex_id or
-                    edge.targetVertex.id == vertex_id)
-
-        print(
-            f"A aresta {'incide' if incident else 'não incide'} no vértice {vertex_id}")
+        incident = (edge.sourceVertex.id == vertex_id or 
+                   edge.targetVertex.id == vertex_id)
+        
+        print(f"A aresta {'incide' if incident else 'não incide'} no vértice {vertex_id}")
 
     # 10. Checagem da existência de arestas
     def has_edges(self):
@@ -460,13 +439,13 @@ class ListGraph(Graph):
         if not self.edges:
             print("O grafo é vazio (não possui arestas).")
             return
-
+        
         # Verifica se é completo
         num_vertices = len(self.vertices)
         max_edges = num_vertices * (num_vertices - 1)
         if not self.directed:
             max_edges = max_edges // 2
-
+        
         if len(self.edges) == max_edges:
             print("O grafo é completo.")
         else:
@@ -478,8 +457,7 @@ class ListGraph(Graph):
         print("\nLista de Adjacência:")
         for vertex_id, neighbors in self.adjacency_list.items():
             if neighbors:
-                neighbors_str = ", ".join(
-                    [f"{n['vertex_id']}(peso:{n['weight']})" for n in neighbors])
+                neighbors_str = ", ".join([f"{n['vertex_id']}(peso:{n['weight']})" for n in neighbors])
                 print(f"{vertex_id}: [{neighbors_str}]")
             else:
                 print(f"{vertex_id}: []")
@@ -490,13 +468,13 @@ class ListGraph(Graph):
     def lib_add_vertex(self, vertex_id: str) -> Vertex:
         """
         Adiciona um vértice ao grafo usando o ID fornecido.
-
+        
         Args:
             vertex_id (str): ID do vértice a ser adicionado
-
+            
         Returns:
             Vertex: O vértice adicionado
-
+            
         Raises:
             ValueError: Se o vértice já existir
         """
@@ -511,13 +489,13 @@ class ListGraph(Graph):
     def lib_add_vertices(self, count: int) -> list[Vertex]:
         """
         Adiciona múltiplos vértices ao grafo.
-
+        
         Args:
             count (int): Número de vértices a serem adicionados
-
+            
         Returns:
             list[Vertex]: Lista dos vértices adicionados
-
+            
         Raises:
             ValueError: Se o número de vértices for menor ou igual a zero
         """
@@ -535,13 +513,13 @@ class ListGraph(Graph):
     def lib_add_edge(self, source_id: str, target_id: str, weight: float = 1, label: str = None) -> Edge:
         """
         Adiciona uma aresta ao grafo.
-
+        
         Args:
             source_id (str): ID do vértice de origem
             target_id (str): ID do vértice de destino
             weight (float, optional): Peso da aresta. Defaults to 1.
             label (str, optional): Rótulo da aresta. Defaults to None.
-
+            
         Returns:
             Edge: A aresta criada
         """
@@ -554,7 +532,7 @@ class ListGraph(Graph):
         # Adiciona à lista de adjacência
         neighbor_info = {'vertex_id': target_id, 'weight': weight}
         self.adjacency_list[source_id].append(neighbor_info)
-
+        
         if not self.directed:
             neighbor_info_reverse = {'vertex_id': source_id, 'weight': weight}
             self.adjacency_list[target_id].append(neighbor_info_reverse)
@@ -564,21 +542,21 @@ class ListGraph(Graph):
         target_vertex = next(v for v in self.vertices if v.id == target_id)
         new_edge = Edge(source_vertex, target_vertex, weight, label)
         self.edges.append(new_edge)
-
+        
         return new_edge
 
     def lib_remove_edge(self, source_id: str = None, target_id: str = None, label: str = None) -> Edge:
         """
         Remove uma aresta do grafo.
-
+        
         Args:
             source_id (str, optional): ID do vértice de origem
             target_id (str, optional): ID do vértice de destino
             label (str, optional): Rótulo da aresta
-
+            
         Returns:
             Edge: A aresta removida
-
+            
         Raises:
             ValueError: Se a aresta não for encontrada
         """
@@ -591,8 +569,8 @@ class ListGraph(Graph):
                     break
         elif source_id is not None and target_id is not None:
             for edge in self.edges:
-                if (edge.sourceVertex.id == source_id and
-                        edge.targetVertex.id == target_id):
+                if (edge.sourceVertex.id == source_id and 
+                    edge.targetVertex.id == target_id):
                     edge_to_remove = edge
                     break
 
@@ -604,13 +582,13 @@ class ListGraph(Graph):
 
         # Remove da lista de adjacência
         self.adjacency_list[source_id] = [
-            neighbor for neighbor in self.adjacency_list[source_id]
+            neighbor for neighbor in self.adjacency_list[source_id] 
             if neighbor['vertex_id'] != target_id
         ]
-
+        
         if not self.directed:
             self.adjacency_list[target_id] = [
-                neighbor for neighbor in self.adjacency_list[target_id]
+                neighbor for neighbor in self.adjacency_list[target_id] 
                 if neighbor['vertex_id'] != source_id
             ]
 
@@ -620,14 +598,14 @@ class ListGraph(Graph):
     def lib_set_vertex_weight(self, vertex_id: str, weight: float) -> Vertex:
         """
         Define o peso de um vértice.
-
+        
         Args:
             vertex_id (str): ID do vértice
             weight (float): Novo peso
-
+            
         Returns:
             Vertex: O vértice atualizado
-
+            
         Raises:
             ValueError: Se o vértice não for encontrado
         """
@@ -640,14 +618,14 @@ class ListGraph(Graph):
     def lib_set_vertex_label(self, vertex_id: str, label: str) -> Vertex:
         """
         Define o rótulo de um vértice.
-
+        
         Args:
             vertex_id (str): ID do vértice
             label (str): Novo rótulo
-
+            
         Returns:
             Vertex: O vértice atualizado
-
+            
         Raises:
             ValueError: Se o vértice não for encontrado
         """
@@ -660,16 +638,16 @@ class ListGraph(Graph):
     def lib_set_edge_weight(self, weight: float, source_id: str = None, target_id: str = None, label: str = None) -> Edge:
         """
         Define o peso de uma aresta.
-
+        
         Args:
             weight (float): Novo peso
             source_id (str, optional): ID do vértice de origem
             target_id (str, optional): ID do vértice de destino
             label (str, optional): Rótulo da aresta
-
+            
         Returns:
             Edge: A aresta atualizada
-
+            
         Raises:
             ValueError: Se a aresta não for encontrada
         """
@@ -682,8 +660,8 @@ class ListGraph(Graph):
                     break
         elif source_id is not None and target_id is not None:
             for edge in self.edges:
-                if (edge.sourceVertex.id == source_id and
-                        edge.targetVertex.id == target_id):
+                if (edge.sourceVertex.id == source_id and 
+                    edge.targetVertex.id == target_id):
                     edge_to_update = edge
                     break
 
@@ -711,16 +689,16 @@ class ListGraph(Graph):
     def lib_set_edge_label(self, new_label: str, source_id: str = None, target_id: str = None, old_label: str = None) -> Edge:
         """
         Define o rótulo de uma aresta.
-
+        
         Args:
             new_label (str): Novo rótulo
             source_id (str, optional): ID do vértice de origem
             target_id (str, optional): ID do vértice de destino
             old_label (str, optional): Rótulo atual da aresta
-
+            
         Returns:
             Edge: A aresta atualizada
-
+            
         Raises:
             ValueError: Se a aresta não for encontrada
         """
@@ -733,8 +711,8 @@ class ListGraph(Graph):
                     break
         elif source_id is not None and target_id is not None:
             for edge in self.edges:
-                if (edge.sourceVertex.id == source_id and
-                        edge.targetVertex.id == target_id):
+                if (edge.sourceVertex.id == source_id and 
+                    edge.targetVertex.id == target_id):
                     edge_to_update = edge
                     break
 
