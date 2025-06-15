@@ -12,6 +12,7 @@ authors = [
     { name = "Eduardo Henrique", email = "eduardo.henriquems@gmail.com" },
     { name = "Roberta Sophia", email = "roberta.silva@sga.pucminas.br" },
     { name = "João Guilherme Falante", email = "jgfalantearaujo@gmail.com" },
+    { name = "Mariana Henriques", email = "mhenriques3105@gmail.com" },
 ]
 
 [project.scripts]
