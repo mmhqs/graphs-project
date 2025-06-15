@@ -1,20 +1,24 @@
 [build-system]
-requires = ["setuptools>=69"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
-name = "graphs-project"
+name = "graphs_project"
 version = "0.1.0"
-description = "Graph repo with implementation of its own graph library to solve a modeled problem."
+description = "Uma biblioteca Python para manipulação de grafos"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.6"
 authors = [
-    {name = "Roberta Sophia", email = "robertasophiacsilva@gmail.com"},
-    {name = "Seu Nome", email = "seu.email@exemplo.com"}
+    { name = "Eduardo Henrique", email = "eduardo.henriquems@gmail.com" },
+    { name = "Roberta Sophia", email = "roberta.silva@sga.pucminas.br" },
+    { name = "João Guilherme Falante", email = "jgfalantearaujo@gmail.com" },
 ]
 
-dependencies = [
-]
+[project.scripts]
+graphs-cli = "graphs_project.main:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/graphs_project"]
 
 [dependency-groups]
 dev = [
@@ -35,6 +39,3 @@ fixable = ["ALL"]
 python_version = "3.11"
 warn_return_any = true
 disallow_untyped_defs = true
-
-[project.scripts]
-graphs-project = "graphs_project.core:soma_lista"
