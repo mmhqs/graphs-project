@@ -368,3 +368,246 @@ class MatrixGraph(Graph):
         print("   ", " ".join(v.id for v in self.vertices))
         for i, row in enumerate(self.matrix):
             print(self.vertices[i].id, row)
+
+    # Versão lib das funções principais
+    def lib_add_vertex(self, vertex_id: str) -> None:
+        """
+        Adiciona um vértice ao grafo usando o ID fornecido.
+        
+        Args:
+            vertex_id (str): ID do vértice a ser adicionado
+        """
+        vertex = Vertex(id=vertex_id)
+        if any(v.id == vertex.id for v in self.vertices):
+            raise ValueError(f"Vértice '{vertex.id}' já existe.")
+
+        self.vertices.append(vertex)
+        for row in self.matrix:
+            row.append(0)
+        self.matrix.append([0] * len(self.vertices))
+        return vertex
+
+    def lib_add_vertices(self, count: int) -> list[Vertex]:
+        """
+        Adiciona múltiplos vértices ao grafo.
+        
+        Args:
+            count (int): Número de vértices a serem adicionados
+            
+        Returns:
+            list[Vertex]: Lista dos vértices adicionados
+        """
+        if count <= 0:
+            raise ValueError("O número de vértices deve ser positivo.")
+
+        added_vertices = []
+        for i in range(count):
+            vertex_id = f"V{i}"
+            vertex = self.lib_add_vertex(vertex_id)
+            added_vertices.append(vertex)
+
+        return added_vertices
+
+    def lib_add_edge(self, source_id: str, target_id: str, weight: float = 1, label: str = None) -> Edge:
+        """
+        Adiciona uma aresta ao grafo.
+        
+        Args:
+            source_id (str): ID do vértice de origem
+            target_id (str): ID do vértice de destino
+            weight (float, optional): Peso da aresta. Defaults to 1.
+            label (str, optional): Rótulo da aresta. Defaults to None.
+            
+        Returns:
+            Edge: A aresta criada
+        """
+        # Verifica se os vértices existem, senão cria
+        if not any(v.id == source_id for v in self.vertices):
+            self.lib_add_vertex(source_id)
+        if not any(v.id == target_id for v in self.vertices):
+            self.lib_add_vertex(target_id)
+
+        ids = [v.id for v in self.vertices]
+        idx1 = ids.index(source_id)
+        idx2 = ids.index(target_id)
+
+        self.matrix[idx1][idx2] = weight
+        if not self.directed:
+            self.matrix[idx2][idx1] = weight
+
+        source_vertex = self.vertices[idx1]
+        target_vertex = self.vertices[idx2]
+
+        new_edge = Edge(source_vertex, target_vertex, weight, label)
+        self.edges.append(new_edge)
+        
+        return new_edge
+
+    def lib_remove_edge(self, source_id: str = None, target_id: str = None, label: str = None) -> Edge:
+        """
+        Remove uma aresta do grafo.
+        
+        Args:
+            source_id (str, optional): ID do vértice de origem
+            target_id (str, optional): ID do vértice de destino
+            label (str, optional): Rótulo da aresta
+            
+        Returns:
+            Edge: A aresta removida
+        
+        Raises:
+            ValueError: Se a aresta não for encontrada
+        """
+        edge_to_remove = None
+
+        if label is not None:
+            for edge in self.edges:
+                if edge.label == label:
+                    edge_to_remove = edge
+                    break
+        elif source_id is not None and target_id is not None:
+            for edge in self.edges:
+                if (edge.sourceVertex.id == source_id and 
+                    edge.targetVertex.id == target_id):
+                    edge_to_remove = edge
+                    break
+
+        if not edge_to_remove:
+            raise ValueError("Aresta não encontrada.")
+
+        source_id = edge_to_remove.sourceVertex.id
+        target_id = edge_to_remove.targetVertex.id
+
+        ids = [v.id for v in self.vertices]
+        idx1 = ids.index(source_id)
+        idx2 = ids.index(target_id)
+
+        self.matrix[idx1][idx2] = 0
+        if not self.directed:
+            self.matrix[idx2][idx1] = 0
+
+        self.edges.remove(edge_to_remove)
+        return edge_to_remove
+
+    def lib_set_vertex_weight(self, vertex_id: str, weight: float) -> Vertex:
+        """
+        Define o peso de um vértice.
+        
+        Args:
+            vertex_id (str): ID do vértice
+            weight (float): Novo peso
+            
+        Returns:
+            Vertex: O vértice atualizado
+            
+        Raises:
+            ValueError: Se o vértice não for encontrado
+        """
+        for vertex in self.vertices:
+            if vertex.id == vertex_id:
+                vertex.weight = weight
+                return vertex
+        raise ValueError(f"Vértice '{vertex_id}' não encontrado.")
+
+    def lib_set_vertex_label(self, vertex_id: str, label: str) -> Vertex:
+        """
+        Define o rótulo de um vértice.
+        
+        Args:
+            vertex_id (str): ID do vértice
+            label (str): Novo rótulo
+            
+        Returns:
+            Vertex: O vértice atualizado
+            
+        Raises:
+            ValueError: Se o vértice não for encontrado
+        """
+        for vertex in self.vertices:
+            if vertex.id == vertex_id:
+                vertex.label = label
+                return vertex
+        raise ValueError(f"Vértice '{vertex_id}' não encontrado.")
+
+    def lib_set_edge_weight(self, weight: float, source_id: str = None, target_id: str = None, label: str = None) -> Edge:
+        """
+        Define o peso de uma aresta.
+        
+        Args:
+            weight (float): Novo peso
+            source_id (str, optional): ID do vértice de origem
+            target_id (str, optional): ID do vértice de destino
+            label (str, optional): Rótulo da aresta
+            
+        Returns:
+            Edge: A aresta atualizada
+            
+        Raises:
+            ValueError: Se a aresta não for encontrada
+        """
+        edge_to_update = None
+
+        if label is not None:
+            for edge in self.edges:
+                if edge.label == label:
+                    edge_to_update = edge
+                    break
+        elif source_id is not None and target_id is not None:
+            for edge in self.edges:
+                if (edge.sourceVertex.id == source_id and 
+                    edge.targetVertex.id == target_id):
+                    edge_to_update = edge
+                    break
+
+        if not edge_to_update:
+            raise ValueError("Aresta não encontrada.")
+
+        source_id = edge_to_update.sourceVertex.id
+        target_id = edge_to_update.targetVertex.id
+
+        ids = [v.id for v in self.vertices]
+        idx1 = ids.index(source_id)
+        idx2 = ids.index(target_id)
+
+        self.matrix[idx1][idx2] = weight
+        if not self.directed:
+            self.matrix[idx2][idx1] = weight
+
+        edge_to_update.weight = weight
+        return edge_to_update
+
+    def lib_set_edge_label(self, new_label: str, source_id: str = None, target_id: str = None, old_label: str = None) -> Edge:
+        """
+        Define o rótulo de uma aresta.
+        
+        Args:
+            new_label (str): Novo rótulo
+            source_id (str, optional): ID do vértice de origem
+            target_id (str, optional): ID do vértice de destino
+            old_label (str, optional): Rótulo atual da aresta
+            
+        Returns:
+            Edge: A aresta atualizada
+            
+        Raises:
+            ValueError: Se a aresta não for encontrada
+        """
+        edge_to_update = None
+
+        if old_label is not None:
+            for edge in self.edges:
+                if edge.label == old_label:
+                    edge_to_update = edge
+                    break
+        elif source_id is not None and target_id is not None:
+            for edge in self.edges:
+                if (edge.sourceVertex.id == source_id and 
+                    edge.targetVertex.id == target_id):
+                    edge_to_update = edge
+                    break
+
+        if not edge_to_update:
+            raise ValueError("Aresta não encontrada.")
+
+        edge_to_update.label = new_label
+        return edge_to_update
